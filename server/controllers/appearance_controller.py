@@ -1,13 +1,12 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from server.models.appearance import Appearance
-from server.models import db
 from server.models.guest import Guest
 from server.models.episode import Episode
+from server.models import db
 
 appearance_bp = Blueprint('appearance', __name__)
 
-# POST /appearances - create new appearance (auth required)
 @appearance_bp.route('/appearances', methods=['POST'])
 @jwt_required()
 def create_appearance():
@@ -35,4 +34,9 @@ def create_appearance():
     db.session.add(appearance)
     db.session.commit()
 
-    return jsonify(appearance.to_dict()), 201
+    return jsonify({
+        "id": appearance.id,
+        "rating": appearance.rating,
+        "guest_id": appearance.guest_id,
+        "episode_id": appearance.episode_id
+    }), 201

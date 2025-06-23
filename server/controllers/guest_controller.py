@@ -8,5 +8,8 @@ guest_bp = Blueprint('guest', __name__)
 @guest_bp.route('/guests', methods=['GET'])
 def get_guests():
     guests = Guest.query.all()
-    guest_list = [guest.to_dict() for guest in guests]
-    return jsonify(guest_list), 200
+    return jsonify([{
+        "id": guest.id,
+        "name": guest.name,
+        "ingredients": guest.occupation
+    } for guest in guests]), 200
