@@ -5,6 +5,7 @@ from server.models import db
 
 auth_bp = Blueprint("auth", __name__)
 
+# Register with auth required
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -24,6 +25,7 @@ def register():
 
     return jsonify({"message": "User created"}), 201
 
+# Login with auth required
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
